@@ -1,3 +1,5 @@
+import hashlib
+import json
 from datetime import datetime
 from typing import Annotated, Any, Optional
 
@@ -11,6 +13,12 @@ from backend.core import core_models
 from backend.database.postgres import project_models
 
 PROJECT_ID = int
+
+
+def dict_hash(d):
+    return hashlib.sha256(
+        json.dumps(d, sort_keys=True).encode("utf-8")
+    ).hexdigest()
 
 
 # @pydantic.validate_call
@@ -98,7 +106,9 @@ async def add_to_db(
     commit: Optional[bool] = True,
 ) -> PROJECT_ID:
     logger.debug("Adding geojson to db")
-    logger.debug(f"New project: {name=}, {start_date=},{end_date=} {description=}")
+    logger.debug(
+        f"New project: {name=}, {start_date=},{end_date=} {description=}"
+    )
     project = project_models.Project(
         name=name,
         start_date=start_date,
@@ -227,7 +237,9 @@ async def fetch_all_projects(
     if not results:
         return status.HTTP_404_NOT_FOUND
     # return result
-    return [core_models.ProjectCore.model_validate(result) for result in results]
+    return [
+        core_models.ProjectCore.model_validate(result) for result in results
+    ]
 
 
 # @pydantic.validate_call
