@@ -1,0 +1,7 @@
+./venv/
+/.idea
+/deployment/.env
+/deployment/postgres_data
+
+/backend/api/logs/
+/backend/logs/

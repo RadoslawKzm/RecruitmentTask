@@ -1,0 +1,148 @@
+[project]
+name = "Monthly Report"
+description = "Generate monthly reports from shopify shop"
+readme = "README.md"
+license = {file="LICENSE"}
+authors =[{name="Radoslaw Kuzma", email="radoslaw.kuzma@devnoplan.com"}]
+requires-python = ">=3.13"
+max-line-length = 88
+count = true
+
+[tool.flake8]
+ignore = ['E1', 'E2', 'E3', 'E4', "W503"]
+per-file-ignores = ['__init__.py:F401']
+exclude = [
+    'migrations',
+    '__pycache__',
+    'manage.py',
+    'settings.py',
+    'venv',
+    '.venv',
+    '.git',
+    '.idea',
+    'legacy',
+    'constants',
+    '.pytest_cache']
+
+[tool.black]
+target-version = ['py313']
+line-length = 88
+force-exclude = "\\.(git|mypy_cache|venv|idea)"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+skip_glob = '*/versions/*, */vendor/**'
+default_section = "THIRDPARTY"
+
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv"]
+
+# Same as Black.
+line-length = 79
+indent-width = 4
+
+# Assume Python 3.13
+target-version = "py313"
+
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
+# McCabe complexity (`C901`) by default.
+select = ["E4", "E7", "E9", "F"]
+ignore = []
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+# Enable auto-formatting of code examples in docstrings. Markdown,
+# reStructuredText code/literal blocks and doctests are all supported.
+# This is currently disabled by default, but it is planned for this
+# to be opt-out in the future.
+docstring-code-format = true
+
+# Set the line length limit used when formatting code snippets in
+# docstrings.
+# This only has an effect when the `docstring-code-format` setting is
+# enabled.
+docstring-code-line-length = "dynamic"
+
+
+[tool.bandit]
+# Bandit configuration for static analysis
+targets = ["src", "tests"]  # Directories to scan
+exclude = ["migrations", "__pycache__"]  # Excluded directories
+severity = "LOW"  # Minimum severity to report
+skips = ["B101", "B104"]  # List of checks to skip
+
+[tool.safety]
+# Safety configuration for dependency scanning
+ignore = ["12345", "67890"]  # IDs of known vulnerabilities to ignore
+full-report = true  # Whether to generate a detailed report
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+asyncio_default_fixture_loop_scope = "function"
+
+#[tool.mypy]
+#python_version = 3.13
+#plugins = 'pydantic.mypy, sqlmypy'
+#show_error_codes = true
+#ignore_missing_imports = true
+##no_implicit_optional = true
+#strict_equality = true
+##strict_optional = true  DEFAULT
+#warn_unused_ignores = true
+#disallow_untyped_defs = true
+#disallow_incomplete_defs = true
+#exclude = ['^setup.py$', 'venv', '.idea', '.git', 'legacy', 'constatnts', '.pytest_cache']
+#strict = true
